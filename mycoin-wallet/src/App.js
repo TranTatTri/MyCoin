@@ -1,25 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import WalletCreate from './components/WalletCreate';
+import AccountStats from './components/AccountStats';
+import SendCoin from './components/SendCoin';
+import TransactionHistory from './components/TransactionHistory';
 
-function App() {
+const App = () => {
+  const [wallet, setWallet] = useState(null);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h1>MyCoin Wallet</h1>
+      <WalletCreate setWallet={setWallet} />
+      {wallet && (
+        <>
+          <AccountStats address={wallet.address} />
+          <SendCoin fromAddress={wallet.address} privateKey={wallet.privateKey} />
+          <TransactionHistory address={wallet.address} />
+        </>
+      )}
     </div>
   );
-}
+};
 
 export default App;
