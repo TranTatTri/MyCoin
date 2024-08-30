@@ -1,6 +1,6 @@
 import { ethers } from 'ethers';
 
-const provider = new ethers.providers.JsonRpcProvider('YOUR_BLOCKCHAIN_PROVIDER_URL');
+const provider = new ethers.providers.JsonRpcProvider('e373a557d35146e3ab43af1089ff2d01');
 
 export const getAccountStats = async (address) => {
   const balance = await provider.getBalance(address);
