@@ -1,26 +1,23 @@
-import React, { useState } from 'react';
-import { generateWallet } from '../services/walletService';
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
-const WalletCreate = () => {
-  const [wallet, setWallet] = useState(null);
+function WalletCreate() {
+  const navigate = useNavigate();
 
   const handleCreateWallet = () => {
-    const newWallet = generateWallet();
-    setWallet(newWallet);
+    navigate('/create-wallet');
+  };
+
+  const handleAccessWallet = () => {
+    navigate('/access-wallet');
   };
 
   return (
-    <div>
-      <h2>Tạo Ví</h2>
-      <button onClick={handleCreateWallet}>Tạo ví mới</button>
-      {wallet && (
-        <div>
-          <p>Private Key: {wallet.privateKey}</p>
-          <p>Address: {wallet.address}</p>
-        </div>
-      )}
+    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+      <button onClick={handleCreateWallet}>Tạo Ví</button>
+      <button onClick={handleAccessWallet}>Access My Wallet</button>
     </div>
   );
-};
+}
 
 export default WalletCreate;

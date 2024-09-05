@@ -1,35 +1,48 @@
 import React, { useState } from 'react';
-import { sendTransaction } from '../services/blockchainService';
+import { useNavigate } from 'react-router-dom';
 
-const SendCoin = ({ fromAddress, privateKey }) => {
-  const [toAddress, setToAddress] = useState('');
+function SendCoin() {
+  const [recipientAddress, setRecipientAddress] = useState('');
   const [amount, setAmount] = useState('');
-  const [transactionHash, setTransactionHash] = useState(null);
+  const navigate = useNavigate();
 
-  const handleSendCoin = async () => {
-    const hash = await sendTransaction(fromAddress, privateKey, toAddress, amount);
-    setTransactionHash(hash);
+  const handleSend = () => {
+    // Thực hiện gửi giao dịch ở đây
+    console.log(`Sending ${amount} MyCoin to ${recipientAddress}`);
+    // Reset fields after sending
+    setRecipientAddress('');
+    setAmount('');
   };
 
   return (
-    <div>
-      <h2>Gửi Coin</h2>
-      <input
-        type="text"
-        placeholder="Địa chỉ người nhận"
-        value={toAddress}
-        onChange={e => setToAddress(e.target.value)}
-      />
-      <input
-        type="text"
-        placeholder="Số lượng"
-        value={amount}
-        onChange={e => setAmount(e.target.value)}
-      />
-      <button onClick={handleSendCoin}>Gửi</button>
-      {transactionHash && <p>Transaction Hash: {transactionHash}</p>}
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', height: '100vh', justifyContent: 'center' }}>
+      <h2>Gửi coin cho một địa chỉ khác</h2>
+      <div style={{ margin: '10px 0' }}>
+        <label>
+          Địa chỉ ví nhận:
+          <input
+            type="text"
+            value={recipientAddress}
+            onChange={(e) => setRecipientAddress(e.target.value)}
+            style={{ marginLeft: '10px', width: '300px' }}
+          />
+        </label>
+      </div>
+      <div style={{ margin: '10px 0' }}>
+        <label>
+          Số lượng coin:
+          <input
+            type="number"
+            value={amount}
+            onChange={(e) => setAmount(e.target.value)}
+            style={{ marginLeft: '10px', width: '300px' }}
+          />
+        </label>
+      </div>
+      <button onClick={handleSend} style={{ margin: '20px 0' }}>Send</button>
+      <button onClick={() => navigate(-1)}>Back</button> {/* Nút "Back" */}
     </div>
   );
-};
+}
 
 export default SendCoin;
